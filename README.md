@@ -13,3 +13,5 @@
 * [Лекция №2](/Лекции/Lecture_2.ipynb)
 * [Лекция №3](/Лекции/Lecture_3.ipynb)
 * [Лекция №4](/Лекции/Lecture_4.ipynb)
+* [Лекции №5](/Лекции/Lecture_5.ipynb)
+* [Лекции №6](/Лекции/Lecture_6.ipynb)
