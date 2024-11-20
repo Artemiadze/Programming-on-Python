@@ -1,13 +1,17 @@
+from accessify import protected
+
+
 class Programmer:
     def __init__(self, name, post):
         self.name = name                                              # Имя
-        self.post = post                                              # Должность
+        self.post = post.title()                                      # Должность
         self.work_hours = 0                                           # Кол-во отработанных часов
-        self.salary_per_hour = self.info_post_salary(post)               # Должность (всегда с Джуна)
+        self.salary_per_hour = self.info_post_salary(post)            # Должность
         self.allowance = 0                                            # Надбавка (Senior)
         self.salary_accumulated = 0                                   # Накопившеяся зарплата
         self.history = [f"{self.name} принят в компанию на должность {self.post}'а"]  # История изменения
 
+    @protected
     def info_post_salary(self, post):
         """ Метод вовзращает размер оклада для каждой из должностей"""
         salary_dict = {
@@ -16,6 +20,18 @@ class Programmer:
             'Senior': 20
         }
         return salary_dict.get(post, 0)  # Возвращает зарплату
+
+    @property
+    def post(self):
+        """Валидация  данных для должности программиста
+        Если должность будет неверной, то будет выводить ошибку (прям красную строку с ошибкой Value error)"""
+        return self._post
+
+    @post.setter
+    def post(self, value):
+        if value != 'Junior' and value != 'Middle' and value != 'Senior':
+            raise ValueError("Введенa неправильная должность")
+        self._post = value
 
     def work(self, time):
         """ Метод считает отработку в количестве часов, считает сколько у него почасовая оплата (надбавка + ЗП)
@@ -64,11 +80,11 @@ class Programmer:
 
         return '\n'.join(self.history)
 
-#Проверку на валидность данных сделать
 
-# Пример использования
-p1 = Programmer("Иван", "Middle")
+# Практика использования
+p1 = Programmer("Артём", "MIDDLE")
 p1.work(10)
+#print(p1.info_post_salary("Middle")) #проверка на доступ к защищенному методу
 p1.bonus(50)
 p1.rise()
 p1.work(5)
