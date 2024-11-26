@@ -29,6 +29,7 @@ class Enigma:
 
     def first_rotor_change(self):
         """Метод совершает изменение сообщения по первому ротору"""
+        rotor_shift = 0
         for index in range(len(self.message)):
             for i in range(len(self.rotor_1)):
                 if self.index_of_symbol(self.message[index]) == i:
@@ -38,12 +39,16 @@ class Enigma:
                     code_list[index] = self.rotor_1[i]
                     self.message = ''.join(code_list)
                     self.update_rotor('rotor_1')
+                    rotor_shift += 1
                     # self.update_rotor_1() - на случай, если пред. вариант будет сбоить
                     break
+        if rotor_shift == len(self.rotor_1):
+            self.update_rotor('rotor_2')
         print(self.message)
 
     def second_rotor_change(self):
         """Метод совершает изменение сообщения по первому ротору"""
+        rotor_shift = 0
         for index in range(len(self.message)):
             for i in range(len(self.rotor_2)):
                 if self.index_of_symbol(self.message[index]) == i:
@@ -53,6 +58,8 @@ class Enigma:
                     code_list[index] = self.rotor_2[i]
                     self.message = ''.join(code_list)
                     break
+        if rotor_shift == len(self.rotor_2):
+            self.update_rotor('rotor_3')
         print(self.message)
 
     def third_rotor_change(self):
