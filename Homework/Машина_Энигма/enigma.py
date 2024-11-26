@@ -29,11 +29,42 @@ class Enigma:
 
     def first_rotor_change(self):
         """Метод совершает изменение сообщения по первому ротору"""
-        for element in self.message:
+        for index in range(len(self.message)):
             for i in range(len(self.rotor_1)):
-                if self.index_of_symbol(element) == i:
-                    self.message = self.message.replace(element, self.rotor_1[i])
-                    self.update_rotor_1()
+                if self.index_of_symbol(self.message[index]) == i:
+                    # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                    print(f"Меняем  {self.message[index]} на {self.rotor_1[i]}")
+                    code_list = list(self.message)
+                    code_list[index] = self.rotor_1[i]
+                    self.message = ''.join(code_list)
+                    self.update_rotor('rotor_1')
+                    # self.update_rotor_1() - на случай, если пред. вариант будет сбоить
+                    break
+        print(self.message)
+
+    def second_rotor_change(self):
+        """Метод совершает изменение сообщения по первому ротору"""
+        for index in range(len(self.message)):
+            for i in range(len(self.rotor_2)):
+                if self.index_of_symbol(self.message[index]) == i:
+                    # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                    print(f"Меняем  {self.message[index]} на {self.rotor_2[i]}")
+                    code_list = list(self.message)
+                    code_list[index] = self.rotor_2[i]
+                    self.message = ''.join(code_list)
+                    break
+        print(self.message)
+
+    def third_rotor_change(self):
+        """Метод совершает изменение сообщения по первому ротору"""
+        for index in range(len(self.message)):
+            for i in range(len(self.rotor_3)):
+                if self.index_of_symbol(self.message[index]) == i:
+                    # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                    print(f"Меняем  {self.message[index]} на {self.rotor_3[i]}")
+                    code_list = list(self.message)
+                    code_list[index] = self.rotor_3[i]
+                    self.message = ''.join(code_list)
                     break
         print(self.message)
 
@@ -55,3 +86,4 @@ class Enigma:
         rotor = getattr(self, rotor_name)  # Получить значение атрибута по имени
         updated_rotor = rotor[1:] + rotor[:1]  # Сдвиг ротора
         setattr(self, rotor_name, updated_rotor)  # Обновить атрибут на новый
+        print("Обновлённый ротер: ", updated_rotor)
