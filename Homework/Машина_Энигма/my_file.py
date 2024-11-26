@@ -13,17 +13,27 @@ with open("Rotor_2.txt", "r", encoding='utf-8') as file_1:
 
 with open("Rotor_3.txt", "r", encoding='utf-8') as file_1:
     file_rotor_3 = file_1.read()
+with open("Reflector.txt", "r", encoding='utf-8') as file_ref:
+    reflector_file = re.split(r'[ ,-]+', file_ref.read())
 
 # Не забыть удалить!!!
 print(file_with_panel)
 print(file_rotor_1)
 print(file_rotor_2)
 print(file_rotor_3 + "\n")
+print("Сдвиг влево ", file_rotor_1[1:] + file_rotor_1[:1] + "\n")
+print("Сдвиг вправо ", file_rotor_1[-1:] + file_rotor_1[:-1])
+print(reflector_file)
+print("\n")
 
-print(file_rotor_1[1:] + file_rotor_1[:1] + "\n")
-
-code = e.Enigma('ГАВ', file_with_panel, file_rotor_1, file_rotor_2, file_rotor_3)
-code.panel_changes()
-code.first_rotor_change()
-code.second_rotor_change()
-code.third_rotor_change()
+code = e.Enigma(file_with_panel, file_rotor_1, file_rotor_2, file_rotor_3, reflector_file)
+symbol = 'Г'
+symbol = code.panel_changes(symbol)
+symbol = code.first_rotor_change(symbol,1)
+symbol = code.second_rotor_change(symbol, 1)
+symbol = code.third_rotor_change(symbol)
+symbol = code.reflectors_change(symbol)
+symbol = code.third_rotor_change(symbol)
+symbol = code.second_rotor_change(symbol, -1)
+symbol = code.first_right_rotor_change(symbol, -1)
+symbol = code.panel_changes(symbol)
