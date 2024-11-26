@@ -47,7 +47,6 @@ class Enigma:
                 # print("Нынешний первый ротор", self.rotor_1)
                 symbol = self.rotor_1[i]
                 self.update_rotor('rotor_1', position_to_shift)
-                self.rotor_shift_1 += 1
                 # self.update_rotor_1() - на случай, если пред. вариант будет сбоить
                 break
         if self.rotor_shift_1 == len(self.rotor_1):
@@ -63,11 +62,10 @@ class Enigma:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 symbol = self.symbol_of_index(i)
                 self.update_rotor('rotor_1_start', position_to_shift)
-                self.rotor_shift_1 += 1
                 # self.update_rotor_1() - на случай, если пред. вариант будет сбоить
                 break
         if self.rotor_shift_1 == len(self.rotor_1_start):
-            self.update_rotor('rotor_2', position_to_shift)
+            self.update_rotor('rotor_2_start', position_to_shift)
         print("Новый символ после 1 ротора = ", symbol)
         return symbol
 
@@ -77,10 +75,23 @@ class Enigma:
             if self.index_of_symbol(symbol) == i:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 # print(f"Меняем  {symbol} на {self.rotor_2[i]}")
+                print("Нынешний second ротор", self.rotor_2)
                 symbol = self.rotor_2[i]
                 break
         if self.rotor_shift_2 == len(self.rotor_2):
             self.update_rotor('rotor_3', position_to_shift)
+        print("Новый символ после 2 ротора = ", symbol)
+        return symbol
+
+    def second_right_rotor_change(self, symbol, position_to_shift):
+        """Метод совершает изменение сообщения по первому ротору"""
+        for i in range(len(self.rotor_2_start)):
+            if self.rotor_2_start[i] == symbol:
+                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                symbol = self.symbol_of_index(i)
+                break
+        if self.rotor_shift_1 == len(self.rotor_2_start):
+            self.update_rotor('rotor_3_start', position_to_shift)
         print("Новый символ после 2 ротора = ", symbol)
         return symbol
 
