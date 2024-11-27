@@ -1,5 +1,24 @@
+class ConnectingPanel:
+    """Класс представляет из себя модуль соединяющей панели в шифровальной машине Энигма"""
+
+    def __init__(self, panel):
+        self.panel = panel  # list элементов соединительной панели
+
+    def panel_changes(self, symbol):
+        """ Метод производит замену символов согласно правилу, прописанном в соединительной панели"""
+        for j in range(0, len(self.panel), 2):
+            if symbol == self.panel[j]:
+                symbol = self.panel[j + 1]
+            elif symbol == self.panel[j + 1]:
+                symbol = self.panel[j]
+
+        print("Новый символ после panel = ", symbol)
+        return symbol
+
+
 class Rotors:
-    """Класс ротор, включающий в себя методы имитации работы роторов в Энигме"""
+    """Класс ротор, включающий в себя атрибуты методы, которые при взаимодействии совершают работу роторов в Энигме"""
+
     def __init__(self, alphabet, rotor_1, rotor_2, rotor_3):
         self.alphabet = alphabet  # наш алфавит
 
@@ -141,22 +160,11 @@ class Rotors:
         return symbol
 
 
-class Enigma(Rotors):
-    def __init__(self, alphabet, panel, rotor_1, rotor_2, rotor_3, reflector):
-        self.panel = panel  # list элементов соединительной панели
-        Rotors.__init__(self, alphabet, rotor_1, rotor_2, rotor_3)
+class Reflector:
+    """ Класс представляет из себя модуль рефлектора в шифровальной машине Энигма"""
+
+    def __init__(self, reflector):
         self.reflector = reflector  # комбинация рефлектора
-
-    def panel_changes(self, symbol):
-        """ Метод производит замену символов согласно правилу, прописанном в соединительной панели"""
-        for j in range(0, len(self.panel), 2):
-            if symbol == self.panel[j]:
-                symbol = self.panel[j + 1]
-            elif symbol == self.panel[j + 1]:
-                symbol = self.panel[j]
-
-        print("Новый символ после panel = ", symbol)
-        return symbol
 
     def reflectors_change(self, symbol):
         """ Метод обновляет символ по алгоритму, заданным рефлектором"""
@@ -169,3 +177,10 @@ class Enigma(Rotors):
                 break
         print("Новый символ после рефлектора = ", symbol)
         return symbol
+
+
+class Enigma(ConnectingPanel, Rotors, Reflector):
+    def __init__(self, alphabet, panel, rotor_1, rotor_2, rotor_3, reflector):
+        ConnectingPanel.__init__(self, panel)  # Включение в работу Энигмы его соединяющую панель
+        Rotors.__init__(self, alphabet, rotor_1, rotor_2, rotor_3)  # Включение в работу Энигмы роторы
+        Reflector.__init__(self, reflector)
