@@ -14,15 +14,16 @@ with open("Reflector.txt", "r", encoding='utf-8') as file_ref:
 
 position_rotors = input()
 connecting_panel = input()
-connecting_panel = re.split(r'[ ,-]', connecting_panel)
+connecting_panel = list(connecting_panel)
 word = input()
 
 
 # Не забыть удалить!!!
+print(connecting_panel)
 print(file_rotor_1)
 print(file_rotor_2)
 print(file_rotor_3 + "\n")
-print("Сдвиг влево ", file_rotor_1[1:] + file_rotor_1[:1] + "\n")
+print("Сдвиг влево ", file_rotor_1[1:] + file_rotor_1[:1])
 print("Сдвиг вправо ", file_rotor_1[-1:] + file_rotor_1[:-1])
 print(reflector_file)
 print("\n")

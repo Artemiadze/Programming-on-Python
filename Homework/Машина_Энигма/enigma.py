@@ -144,11 +144,12 @@ class Enigma:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 symbol = self.symbol_of_index(i)
                 break
+
         print("Новый символ после 3 ротора = ", symbol)
         return symbol
 
     def reflectors_change(self, symbol):
-        """ """
+        """ Метод обновляет символ по алгоритму, заданным рефлектором"""
         for j in range(0, len(self.reflector), 2):
             if symbol == self.reflector[j]:
                 symbol = self.reflector[j + 1]
