@@ -182,5 +182,5 @@ class Reflector:
 class Enigma(ConnectingPanel, Rotors, Reflector):
     def __init__(self, alphabet, panel, rotor_1, rotor_2, rotor_3, reflector):
         ConnectingPanel.__init__(self, panel)  # Включение в работу Энигмы его соединяющую панель
-        Rotors.__init__(self, alphabet, rotor_1, rotor_2, rotor_3)  # Включение в работу Энигмы роторы
-        Reflector.__init__(self, reflector)
+        Rotors.__init__(self, alphabet, rotor_1, rotor_2, rotor_3)  # Включение в работу Энигмы роторов
+        Reflector.__init__(self, reflector)  # Включение в работу Энигмы рефлектора

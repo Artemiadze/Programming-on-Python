@@ -9,14 +9,13 @@ with open("Rotor_2.txt", "r", encoding='utf-8') as file_1:
 
 with open("Rotor_3.txt", "r", encoding='utf-8') as file_1:
     file_rotor_3 = file_1.read()
+    
 with open("Reflector.txt", "r", encoding='utf-8') as file_ref:
     reflector_file = re.split(r'[ ,-]+', file_ref.read())
 
-position_rotors = input()
-connecting_panel = input()
+# Ввод всех данных
+position_rotors, connecting_panel, word = input().split()
 connecting_panel = list(connecting_panel)
-word = input()
-
 
 # Не забыть удалить!!!
 print(connecting_panel)
@@ -28,8 +27,11 @@ print("Сдвиг вправо ", file_rotor_1[-1:] + file_rotor_1[:-1])
 print(reflector_file)
 print("\n")
 
+# Начало работы с шифрованием на машине Энигма
 code = e.Enigma('АБВГ', connecting_panel, file_rotor_1, file_rotor_2, file_rotor_3, reflector_file)
-encrypted_word = ''
+encrypted_word = ''  # зашифрованное сообщение
+
+# Прогон каждой буквы сообщения через Энигму (имитация ввода с клавиатуры Энигмы буквы для шифровки)
 for symbol in word:
     code.start_position_for_rotors(position_rotors.upper())
     symbol = code.panel_changes(symbol)
