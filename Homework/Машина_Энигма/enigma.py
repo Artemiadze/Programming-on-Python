@@ -12,7 +12,7 @@ class ConnectingPanel:
             elif symbol == self.panel[j + 1]:
                 symbol = self.panel[j]
 
-        print("Новый символ после panel = ", symbol)
+        # print("Новый символ после panel = ", symbol)
         return symbol
 
 
@@ -82,7 +82,7 @@ class Rotors:
             self.update_rotor('rotor_2', position_to_shift)
             self.rotor_shift_left_2 += 1
 
-        print("Новый символ после 1 ротора = ", symbol)
+        # print("Новый символ после 1 ротора = ", symbol)
         return symbol
 
     def first_right_rotor_change(self, symbol, position_to_shift):
@@ -101,7 +101,7 @@ class Rotors:
             self.update_rotor('rotor_2_start', position_to_shift)
             self.rotor_shift_right_2 += 1
 
-        print("Новый символ после 1 ротора = ", symbol)
+        # print("Новый символ после 1 ротора = ", symbol)
         return symbol
 
     def second_rotor_change(self, symbol, position_to_shift):
@@ -111,13 +111,13 @@ class Rotors:
             if self.alphabet[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 # print(f"Меняем  {symbol} на {self.rotor_2[i]}")
-                print("Нынешний second ротор", self.rotor_2)
+                # print("Нынешний second ротор", self.rotor_2)
                 symbol = self.rotor_2[i]
                 break
 
         if self.rotor_shift_left_2 == len(self.rotor_2):
             self.update_rotor('rotor_3', position_to_shift)
-        print("Новый символ после 2 ротора = ", symbol)
+        # print("Новый символ после 2 ротора = ", symbol)
         return symbol
 
     def second_right_rotor_change(self, symbol, position_to_shift):
@@ -132,7 +132,7 @@ class Rotors:
         if self.rotor_shift_right_2 == len(self.rotor_2_start):
             self.update_rotor('rotor_3_start', position_to_shift)
 
-        print("Новый символ после 2 ротора = ", symbol)
+        # print("Новый символ после 2 ротора = ", symbol)
         return symbol
 
     def third_rotor_change(self, symbol):
@@ -144,7 +144,7 @@ class Rotors:
                 symbol = self.rotor_3[i]
                 break
 
-        print("Новый символ после 3 ротора = ", symbol)
+        # print("Новый символ после 3 ротора = ", symbol)
         return symbol
 
     def third_rotor_right_change(self, symbol):
@@ -156,7 +156,7 @@ class Rotors:
                 symbol = self.alphabet[i]
                 break
 
-        print("Новый символ после 3 ротора = ", symbol)
+        # print("Новый символ после 3 ротора = ", symbol)
         return symbol
 
 
@@ -175,7 +175,7 @@ class Reflector:
             elif symbol == self.reflector[j + 1]:
                 symbol = self.reflector[j]
                 break
-        print("Новый символ после рефлектора = ", symbol)
+        # print("Новый символ после рефлектора = ", symbol)
         return symbol
 
 
