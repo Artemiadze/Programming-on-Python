@@ -1,3 +1,8 @@
+from colorama import init
+init(autoreset=True)
+from colorama import Fore
+
+
 class ConnectingPanel:
     """Класс представляет из себя модуль соединяющей панели в шифровальной машине Энигма"""
 
@@ -6,13 +11,13 @@ class ConnectingPanel:
 
     def panel_changes(self, symbol):
         """ Метод производит замену символов согласно правилу, прописанном в соединительной панели"""
+
         for j in range(0, len(self.panel), 2):
             if symbol == self.panel[j]:
                 symbol = self.panel[j + 1]
             elif symbol == self.panel[j + 1]:
                 symbol = self.panel[j]
 
-        # print("Новый символ после panel = ", symbol)
         return symbol
 
 
@@ -42,35 +47,33 @@ class Rotors:
         rotor = getattr(self, rotor_name)  # Получить значение атрибута по имени
         updated_rotor = rotor[position_to_shift:] + rotor[:position_to_shift]  # Сдвиг ротора
         setattr(self, rotor_name, updated_rotor)  # Обновить атрибут на новый
-        # print("Обновлённый ротер: ", updated_rotor)
 
     def start_position_for_rotors(self, position_string):
         """ В зависимости от первого параметра, что ввёл пользователь, меняем начальную позицию ротеров.
         положение (их индекс) букв в алфавите, введённых пользоватем, определяет кол-во сдвигов в роторах перед\
         началом их использования"""
+        try:
+            # определение положения параметров(кол-ва сдвигов)
+            position_1 = self.alphabet.index(position_string[0])
+            position_2 = self.alphabet.index(position_string[1])
+            position_3 = self.alphabet.index(position_string[2])
 
-        # определение положения параметров(кол-ва сдвигов)
-        position_1 = self.alphabet.index(position_string[0])
-        position_2 = self.alphabet.index(position_string[1])
-        position_3 = self.alphabet.index(position_string[2])
-
-        # Обновление (смещение ротеров)
-        self.update_rotor('rotor_1', position_1)
-        self.update_rotor('rotor_2', position_2)
-        self.update_rotor('rotor_3', position_3)
-        self.update_rotor('rotor_1_start', position_1)
-        self.update_rotor('rotor_2_start', position_2)
-        self.update_rotor('rotor_3_start', position_3)
-        # print(f"{position_string[0]} = ", position_1)
-        # print(f"{position_string[1]} = ", position_2)
-        # print(f"{position_string[2]} = ", position_3)
+            # Обновление (смещение ротеров)
+            self.update_rotor('rotor_1', position_1)
+            self.update_rotor('rotor_2', position_2)
+            self.update_rotor('rotor_3', position_3)
+            self.update_rotor('rotor_1_start', position_1)
+            self.update_rotor('rotor_2_start', position_2)
+            self.update_rotor('rotor_3_start', position_3)
+        except IndexError:
+            print(Fore.WHITE + "Надо ввести 3 буквы-параметров для 3 ротеров, а вы вели отнюдь не 3!")
 
     def first_rotor_change(self, symbol, position_to_shift):
         """Метод совершает изменение символа по первому ротору со смещением вправо"""
 
         for i in range(len(self.alphabet)):
             if self.alphabet[i] == symbol:
-                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                # Замена конкретного символа на его шифрованную версию
                 symbol = self.rotor_1[i]
 
                 # после каждой буквы ротор 1 поворачивается на 1 позицию и замены сдвигаются.
@@ -82,7 +85,6 @@ class Rotors:
             self.update_rotor('rotor_2', position_to_shift)
             self.rotor_shift_left_2 += 1
 
-        # print("Новый символ после 1 ротора = ", symbol)
         return symbol
 
     def first_right_rotor_change(self, symbol, position_to_shift):
@@ -90,18 +92,18 @@ class Rotors:
 
         for i in range(len(self.rotor_1_start)):
             if self.rotor_1_start[i] == symbol:
-                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                # Замена конкретного символа на его шифрованную версию
                 symbol = self.alphabet[i]
 
                 # после каждой буквы ротор 1 поворачивается на 1 позицию и замены сдвигаются.
                 self.rotor_shift_right_1 += 1
                 self.update_rotor('rotor_1_start', position_to_shift)
                 break
+
         if self.rotor_shift_right_1 == len(self.rotor_1_start):
             self.update_rotor('rotor_2_start', position_to_shift)
             self.rotor_shift_right_2 += 1
 
-        # print("Новый символ после 1 ротора = ", symbol)
         return symbol
 
     def second_rotor_change(self, symbol, position_to_shift):
@@ -109,15 +111,13 @@ class Rotors:
 
         for i in range(len(self.rotor_2)):
             if self.alphabet[i] == symbol:
-                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
-                # print(f"Меняем  {symbol} на {self.rotor_2[i]}")
-                # print("Нынешний second ротор", self.rotor_2)
+                # Замена конкретного символа на его шифрованную версию
                 symbol = self.rotor_2[i]
                 break
 
         if self.rotor_shift_left_2 == len(self.rotor_2):
             self.update_rotor('rotor_3', position_to_shift)
-        # print("Новый символ после 2 ротора = ", symbol)
+
         return symbol
 
     def second_right_rotor_change(self, symbol, position_to_shift):
@@ -125,14 +125,13 @@ class Rotors:
 
         for i in range(len(self.rotor_2_start)):
             if self.rotor_2_start[i] == symbol:
-                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                # Замена конкретного символа на его шифрованную версию
                 symbol = self.alphabet[i]
                 break
 
         if self.rotor_shift_right_2 == len(self.rotor_2_start):
             self.update_rotor('rotor_3_start', position_to_shift)
 
-        # print("Новый символ после 2 ротора = ", symbol)
         return symbol
 
     def third_rotor_change(self, symbol):
@@ -140,11 +139,10 @@ class Rotors:
 
         for i in range(len(self.rotor_3)):
             if self.alphabet[i] == symbol:
-                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                # Замена конкретного символа на его шифрованную версию
                 symbol = self.rotor_3[i]
                 break
 
-        # print("Новый символ после 3 ротора = ", symbol)
         return symbol
 
     def third_rotor_right_change(self, symbol):
@@ -152,11 +150,10 @@ class Rotors:
 
         for i in range(len(self.rotor_3_start)):
             if self.rotor_3_start[i] == symbol:
-                # Замена конкретного символа в конкретном месте в кодирующемся сообщении
+                # Замена конкретного символа на его шифрованную версию
                 symbol = self.alphabet[i]
                 break
 
-        # print("Новый символ после 3 ротора = ", symbol)
         return symbol
 
 
@@ -175,7 +172,7 @@ class Reflector:
             elif symbol == self.reflector[j + 1]:
                 symbol = self.reflector[j]
                 break
-        # print("Новый символ после рефлектора = ", symbol)
+
         return symbol
 
 

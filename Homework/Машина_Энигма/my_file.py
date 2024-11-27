@@ -1,6 +1,7 @@
 import re
 import enigma as e
 from colorama import init
+
 init(autoreset=True)
 from colorama import Fore, Back
 
@@ -22,6 +23,7 @@ def color_console():
     print(Fore.BLACK + Back.GREEN + "3. Вы должны ввести само сообщение, которое хотите закодировать")
 
 
+# Открытие файлов с настройками трёх роторов и рефлектора
 with open("Rotor_1.txt", "r", encoding='utf-8') as file_1:
     file_rotor_1 = file_1.read()
 
@@ -34,39 +36,34 @@ with open("Rotor_3.txt", "r", encoding='utf-8') as file_1:
 with open("Reflector.txt", "r", encoding='utf-8') as file_ref:
     reflector_file = re.split(r'[ ,-]+', file_ref.read())
 
-
+# запуск основного кода
 if __name__ == "__main__":
     color_console()
+
     # Ввод всех данных
-    position_rotors, connecting_panel, word = input().split()
-    connecting_panel = list(connecting_panel)
+    try:
+        position_rotors, connecting_panel, word = input().upper().split()
+        connecting_panel = list(connecting_panel)
 
-    # Не забыть удалить!!!
-    # print(connecting_panel)
-    # print(file_rotor_1)
-    # print(file_rotor_2)
-    # print(file_rotor_3 + "\n")
-    # print("Сдвиг влево ", file_rotor_1[1:] + file_rotor_1[:1])
-    # print("Сдвиг вправо ", file_rotor_1[-1:] + file_rotor_1[:-1])
-    # print(reflector_file)
-    # print("\n")
+        # Начало работы с шифрованием на машине Энигма
+        code = e.Enigma('АБВГ', connecting_panel, file_rotor_1, file_rotor_2, file_rotor_3, reflector_file)
+        encrypted_word = ''  # зашифрованное сообщение
 
-    # Начало работы с шифрованием на машине Энигма
-    code = e.Enigma('АБВГ', connecting_panel, file_rotor_1, file_rotor_2, file_rotor_3, reflector_file)
-    encrypted_word = ''  # зашифрованное сообщение
+        # Прогон каждой буквы сообщения через Энигму (имитация ввода с клавиатуры Энигмы буквы для шифровки)
+        for symbol in word:
+            code.start_position_for_rotors(position_rotors.upper())
+            symbol = code.panel_changes(symbol)
+            symbol = code.first_rotor_change(symbol, 1)
+            symbol = code.second_rotor_change(symbol, 1)
+            symbol = code.third_rotor_change(symbol)
+            symbol = code.reflectors_change(symbol)
+            symbol = code.third_rotor_right_change(symbol)
+            symbol = code.second_right_rotor_change(symbol, 1)
+            symbol = code.first_right_rotor_change(symbol, 1)
+            symbol = code.panel_changes(symbol)
+            encrypted_word += symbol
 
-    # Прогон каждой буквы сообщения через Энигму (имитация ввода с клавиатуры Энигмы буквы для шифровки)
-    for symbol in word:
-        code.start_position_for_rotors(position_rotors.upper())
-        symbol = code.panel_changes(symbol)
-        symbol = code.first_rotor_change(symbol, 1)
-        symbol = code.second_rotor_change(symbol, 1)
-        symbol = code.third_rotor_change(symbol)
-        symbol = code.reflectors_change(symbol)
-        symbol = code.third_rotor_right_change(symbol)
-        symbol = code.second_right_rotor_change(symbol, 1)
-        symbol = code.first_right_rotor_change(symbol, 1)
-        symbol = code.panel_changes(symbol)
-        encrypted_word += symbol
-
-    print("Ваше зашифрованное слово: ", encrypted_word)
+        print(Fore.CYAN + "Ваше зашифрованное слово: " + Fore.WHITE, encrypted_word)
+    except ValueError:
+        print("Надо ввести три параметра, а вы ввели отнудь не три")
+        print("Или вы ввели символы не из русского алфавита!")
