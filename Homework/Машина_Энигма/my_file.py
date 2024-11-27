@@ -28,7 +28,7 @@ print("Сдвиг вправо ", file_rotor_1[-1:] + file_rotor_1[:-1])
 print(reflector_file)
 print("\n")
 
-code = e.Enigma(connecting_panel, file_rotor_1, file_rotor_2, file_rotor_3, reflector_file)
+code = e.Enigma('АБВГ', connecting_panel, file_rotor_1, file_rotor_2, file_rotor_3, reflector_file)
 encrypted_word = ''
 for symbol in word:
     code.start_position_for_rotors(position_rotors.upper())

@@ -1,8 +1,6 @@
-from accessify import protected
-
-
 class Enigma:
-    def __init__(self, panel, rotor_1, rotor_2, rotor_3, reflector):
+    def __init__(self, alphabet, panel, rotor_1, rotor_2, rotor_3, reflector):
+        self.alphabet = alphabet  # наш алфавит
         self.panel = panel  # list элементов соединительной панели
 
         self.rotor_1 = rotor_1  # начальная комбинация первого ротора для левого смещения
@@ -21,33 +19,26 @@ class Enigma:
         self.rotor_shift_right_1 = 0  # сколько сдвигов вправо совершил первый ротер
         self.rotor_shift_right_2 = 0  # сколько сдвигов вправо совершил первый ротер
 
-    @protected
-    def index_of_symbol(self, symbol):
-        """По букве возвращаем её индекс в алфавите"""
-        char_dict = {
-            'А': 0, 'Б': 1, 'В': 2, 'Г': 3
-        }
-        return char_dict.get(symbol, 0)
+    def start_position_for_rotors(self, position_string):
+        """ В зависимости от первого параметра, что ввёл пользователь, меняем начальную позицию ротеров.
+        положение (их индекс) букв в алфавите, введённых пользоватем, определяет кол-во сдвигов в роторах перед\
+        началом их использования"""
 
-    @protected
-    def symbol_of_index(self, number):
-        """По индексу возвращаем соответсвующую букву из алфавита"""
-        char_dict = {
-            0: 'А', 1: 'Б', 2: 'В', 3: 'Г'
-        }
-        return char_dict.get(number, 0)
+        # определение положения параметров(кол-ва сдвигов)
+        position_1 = self.alphabet.index(position_string[0])
+        position_2 = self.alphabet.index(position_string[1])
+        position_3 = self.alphabet.index(position_string[2])
 
-    def start_position_for_rotors(self,position_string):
-        """ В зависимости от того, что ввёл пользователь, меняем начальную позицию ротером"""
-        position_1 = self.index_of_symbol(position_string[0])
-        position_2 = self.index_of_symbol(position_string[1])
-        position_3 = self.index_of_symbol(position_string[2])
+        # Обновление (смещение ротеров)
         self.update_rotor('rotor_1', position_1)
         self.update_rotor('rotor_2', position_2)
         self.update_rotor('rotor_3', position_3)
         self.update_rotor('rotor_1_start', position_1)
         self.update_rotor('rotor_2_start', position_2)
         self.update_rotor('rotor_3_start', position_3)
+        # print(f"{position_string[0]} = ", position_1)
+        # print(f"{position_string[1]} = ", position_2)
+        # print(f"{position_string[2]} = ", position_3)
 
     def panel_changes(self, symbol):
         """ Метод производит замену символов согласно правилу, прописанном в соединительной панели"""
@@ -62,8 +53,8 @@ class Enigma:
 
     def first_rotor_change(self, symbol, position_to_shift):
         """Метод совершает изменение символа по первому ротору со смещением вправо"""
-        for i in range(len(self.rotor_1)):
-            if self.index_of_symbol(symbol) == i:
+        for i in range(len(self.alphabet)):
+            if self.alphabet[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 symbol = self.rotor_1[i]
 
@@ -84,7 +75,7 @@ class Enigma:
         for i in range(len(self.rotor_1_start)):
             if self.rotor_1_start[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
-                symbol = self.symbol_of_index(i)
+                symbol = self.alphabet[i]
 
                 # после каждой буквы ротор 1 поворачивается на 1 позицию и замены сдвигаются.
                 self.rotor_shift_right_1 += 1
@@ -100,7 +91,7 @@ class Enigma:
     def second_rotor_change(self, symbol, position_to_shift):
         """Метод совершает изменение символа по второму ротору со смещением влево"""
         for i in range(len(self.rotor_2)):
-            if self.index_of_symbol(symbol) == i:
+            if self.alphabet[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 # print(f"Меняем  {symbol} на {self.rotor_2[i]}")
                 print("Нынешний second ротор", self.rotor_2)
@@ -117,7 +108,7 @@ class Enigma:
         for i in range(len(self.rotor_2_start)):
             if self.rotor_2_start[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
-                symbol = self.symbol_of_index(i)
+                symbol = self.alphabet[i]
                 break
 
         if self.rotor_shift_right_2 == len(self.rotor_2_start):
@@ -129,7 +120,7 @@ class Enigma:
     def third_rotor_change(self, symbol):
         """Метод совершает изменение символа по третьему ротору влево"""
         for i in range(len(self.rotor_3)):
-            if self.index_of_symbol(symbol) == i:
+            if self.alphabet[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
                 symbol = self.rotor_3[i]
                 break
@@ -142,7 +133,7 @@ class Enigma:
         for i in range(len(self.rotor_3_start)):
             if self.rotor_3_start[i] == symbol:
                 # Замена конкретного символа в конкретном месте в кодирующемся сообщении
-                symbol = self.symbol_of_index(i)
+                symbol = self.alphabet[i]
                 break
 
         print("Новый символ после 3 ротора = ", symbol)
