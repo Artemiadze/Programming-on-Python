@@ -1,4 +1,4 @@
-class Enigma:
+class Enigma():
     def __init__(self, alphabet, panel, rotor_1, rotor_2, rotor_3, reflector):
         self.alphabet = alphabet  # наш алфавит
         self.panel = panel  # list элементов соединительной панели
