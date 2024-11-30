@@ -68,7 +68,7 @@ class Rotors:
         except IndexError:
             print(Fore.WHITE + "Надо ввести 3 буквы-параметров для 3 ротеров, а вы вели отнюдь не 3!")
 
-    def first_rotor_change(self, symbol, position_to_shift):
+    def first_rotor_change(self, symbol, position_to_shift=1):
         """Метод совершает изменение символа по первому ротору со смещением вправо"""
 
         for i in range(len(self.alphabet)):
@@ -87,7 +87,7 @@ class Rotors:
 
         return symbol
 
-    def first_right_rotor_change(self, symbol, position_to_shift):
+    def first_right_rotor_change(self, symbol, position_to_shift=1):
         """Метод совершает изменение символа по первому ротору со смещением вправо"""
 
         for i in range(len(self.rotor_1_start)):
@@ -100,13 +100,14 @@ class Rotors:
                 self.update_rotor('rotor_1_start', position_to_shift)
                 break
 
+        # Если сделал полный оборот, то следующий ротор двигается на 1
         if self.rotor_shift_right_1 == len(self.rotor_1_start):
             self.update_rotor('rotor_2_start', position_to_shift)
             self.rotor_shift_right_2 += 1
 
         return symbol
 
-    def second_rotor_change(self, symbol, position_to_shift):
+    def second_rotor_change(self, symbol, position_to_shift=1):
         """Метод совершает изменение символа по второму ротору со смещением влево"""
 
         for i in range(len(self.rotor_2)):
@@ -115,12 +116,13 @@ class Rotors:
                 symbol = self.rotor_2[i]
                 break
 
+        # Если сделал полный оборот, то следующий ротор двигается на 1
         if self.rotor_shift_left_2 == len(self.rotor_2):
             self.update_rotor('rotor_3', position_to_shift)
 
         return symbol
 
-    def second_right_rotor_change(self, symbol, position_to_shift):
+    def second_right_rotor_change(self, symbol, position_to_shift=1):
         """Метод совершает изменение символа по второму ротору со смещением вправо"""
 
         for i in range(len(self.rotor_2_start)):
@@ -129,6 +131,7 @@ class Rotors:
                 symbol = self.alphabet[i]
                 break
 
+        # Если сделал полный оборот, то следующий ротор двигается на 1
         if self.rotor_shift_right_2 == len(self.rotor_2_start):
             self.update_rotor('rotor_3_start', position_to_shift)
 
@@ -177,6 +180,9 @@ class Reflector:
 
 
 class Enigma(ConnectingPanel, Rotors, Reflector):
+    """Класс Энигма представляет из себя комплекс механизмов (Они реализованы в разных родительский классах)
+    При создании класса энигма включаются в работу его модули: соединяющая панель, три ротора и рефлектор"""
+
     def __init__(self, alphabet, panel, rotor_1, rotor_2, rotor_3, reflector):
         ConnectingPanel.__init__(self, panel)  # Включение в работу Энигмы его соединяющую панель
         Rotors.__init__(self, alphabet, rotor_1, rotor_2, rotor_3)  # Включение в работу Энигмы роторов

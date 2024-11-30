@@ -53,13 +53,13 @@ if __name__ == "__main__":
         for symbol in word:
             code.start_position_for_rotors(position_rotors.upper())
             symbol = code.panel_changes(symbol)
-            symbol = code.first_rotor_change(symbol, 1)
-            symbol = code.second_rotor_change(symbol, 1)
+            symbol = code.first_rotor_change(symbol)
+            symbol = code.second_rotor_change(symbol)
             symbol = code.third_rotor_change(symbol)
             symbol = code.reflectors_change(symbol)
             symbol = code.third_rotor_right_change(symbol)
-            symbol = code.second_right_rotor_change(symbol, 1)
-            symbol = code.first_right_rotor_change(symbol, 1)
+            symbol = code.second_right_rotor_change(symbol)
+            symbol = code.first_right_rotor_change(symbol)
             symbol = code.panel_changes(symbol)
             encrypted_word += symbol
 
