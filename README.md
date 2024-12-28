@@ -18,3 +18,15 @@
 * [Лекции №7-8](/Лекции/Lecture_7_8.ipynb)
 * [Лекции №9](/Лекции/Lecture_9.ipynb)
 * [Лекции №10](/Лекции/Lecture_10.ipynb)
+* [Лекции №11-12](/Лекции/Lecture_11_12.ipynb)
+* [Лекции №13](/Лекции/Lecture_13.ipynb)
+* [Лекции №14](/Лекции/Lecture_14.ipynb)
+* [Лекции №15](/Лекции/Lecture_15.ipynb)
+
+Итоговая оценка:
+> <picture>
+>   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/light-theme/success.svg">
+>   <img alt="Success" src="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/dark-theme/success.svg">
+> </picture><br>
+>
+> I'm Genius 🗿 10/10
