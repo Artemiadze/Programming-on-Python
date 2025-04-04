@@ -13,15 +13,16 @@
 * [Лекция №2](/Лекции/Lecture_2.ipynb)
 * [Лекция №3](/Лекции/Lecture_3.ipynb)
 * [Лекция №4](/Лекции/Lecture_4.ipynb)
-* [Лекции №5](/Лекции/Lecture_5.ipynb)
-* [Лекции №6](/Лекции/Lecture_6.ipynb)
+* [Лекция №5](/Лекции/Lecture_5.ipynb)
+* [Лекция №6](/Лекции/Lecture_6.ipynb)
 * [Лекции №7-8](/Лекции/Lecture_7_8.ipynb)
-* [Лекции №9](/Лекции/Lecture_9.ipynb)
-* [Лекции №10](/Лекции/Lecture_10.ipynb)
+* [Лекция №9](/Лекции/Lecture_9.ipynb)
+* [Лекция №10](/Лекции/Lecture_10.ipynb)
 * [Лекции №11-12](/Лекции/Lecture_11_12.ipynb)
-* [Лекции №13](/Лекции/Lecture_13.ipynb)
-* [Лекции №14](/Лекции/Lecture_14.ipynb)
-* [Лекции №15](/Лекции/Lecture_15.ipynb)
+* [Лекция №13](/Лекции/Lecture_13.ipynb)
+* [Лекция №14](/Лекции/Lecture_14.ipynb)
+* [Лекция №15](/Лекции/Lecture_15.ipynb)
+* [Лекция №16](/Лекции/Lecture_16.ipynb)
 
 Итоговая оценка:
 > <picture>
